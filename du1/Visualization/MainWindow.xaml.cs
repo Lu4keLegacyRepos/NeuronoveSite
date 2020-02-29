@@ -103,7 +103,10 @@ namespace Visualization
             {
                 foreach (TrainingSet point in trainData)
                 {
-                    DrawPoint((point.Input[0].Map(dataLoader.Range, (-200, 200)), point.Input[1].Map(dataLoader.Range, (-200, 200)), OutputConvertor((int)point.Output)));
+                    //DrawPoint((point.Input[0].Map(dataLoader.Range, (-200, 200)), point.Input[1].Map(dataLoader.Range, (-200, 200)), OutputConvertor((int)point.Output)));
+                    var mappedX = point.Input[0].Map(dataLoader.Range, (-200, 200));
+                    var mappedY = point.Input[1].Map(dataLoader.Range, (-200, 200));
+                    DrawPoint((mappedX, mappedY, OutputConvertor((int)point.Output)));
                 }
             }
             var tmpStartX = p.LineEquations.GetX((-200, p.Bias, p.Weights[0], p.Weights[1]));
