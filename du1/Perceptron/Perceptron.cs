@@ -1,4 +1,5 @@
 ﻿using Perceptron.DataSet;
+using Perceptron.Helpers;
 using Perceptron.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Perceptron
         private List<IDataSet> trainData = null;
         private (int Actual, int Max) NumOfEpoch = (0, 0);
 
-        public Perceptron(int numOfInputs, Func<double, int> activationFunc, double learningConstant = 0.001)
+        public Perceptron(int numOfInputs, Func<double, int> activationFunc, double learningConstant = 0.0001)
         {
             var rnd = new Random();
             LearningRate = learningConstant;
@@ -71,6 +72,7 @@ namespace Perceptron
                     UpdateBias(error);
                     Error = error;
                 }
+                trainData.Shuffle();
             }
         }
 
@@ -82,6 +84,7 @@ namespace Perceptron
 
         public List<IDataSet> TrainStep()
         {
+            trainData.Shuffle();
             foreach (TrainingSet data in trainData)
             {
                 var output = Guess(data.Input);

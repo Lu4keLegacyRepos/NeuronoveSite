@@ -1,5 +1,6 @@
 ﻿using Perceptron.DataSet;
 using Perceptron.Enums;
+using Perceptron.Helpers;
 using Perceptron.Interfaces;
 using System.Collections.Generic;
 using System.Windows;
@@ -16,7 +17,8 @@ namespace Visualization
     /// </summary>
     public partial class MainWindow : Window
     {
-        DataSetFactory factory = new DataSetFactory();
+        //DataSetFactory factory = new DataSetFactory();
+        DataLoader dataLoader = new DataLoader(@"D:\Source Codes\NeuronoveSite\du1\Visualization\InputData\t2r.xml");
         Perceptron.Perceptron p;
 
         private readonly UIElement[] defaultCanvas;
@@ -27,7 +29,7 @@ namespace Visualization
         public MainWindow()
         {
             InitializeComponent();
-            p = new Perceptron.Perceptron(2);
+            p = new Perceptron.Perceptron(2,0.01);
             EpochLabel.Content = $"Training epocha: {ElapsedEpoch}";
             lineLabel.Content = $"Line: {p.LineEquations.ToString((p.Bias, p.Weights[0], p.Weights[1]))}";
             SetTrainData();
@@ -42,21 +44,21 @@ namespace Visualization
         }
         private void SetTrainData()
         {
-            trainData = factory.Create(DataSetType.TrainingSet, p.LineEquations);
+            trainData = dataLoader.GetDataSets().trainData;
             p.SetTrainData(trainData);
         }
 
         private void VisualizePerceptron()
         {
             ResetCanvas();
-            var testData = factory.Create(DataSetType.TestSet);
+            var testData = dataLoader.GetDataSets().testData;
             foreach (TestSet point in testData)
             {
-                DrawPoint((point.Input[0], point.Input[1], OutputConvertor((int)p.Guess(point.Input))));
+                DrawPoint((point.Input[0].Map(dataLoader.Range, (-200, 200)), point.Input[1].Map(dataLoader.Range, (-200, 200)), OutputConvertor((int)p.Guess(point.Input))));
             }
 
-            var tmpStartX = p.LineEquations.GetX((-250,p.Bias, p.Weights[0], p.Weights[1]));
-            var tmpEndX = p.LineEquations.GetX((250, p.Bias, p.Weights[0], p.Weights[1]));
+            var tmpStartX = p.LineEquations.GetX((-200,p.Bias, p.Weights[0], p.Weights[1]));
+            var tmpEndX = p.LineEquations.GetX((200, p.Bias, p.Weights[0], p.Weights[1]));
             DrawLine((tmpStartX, p.LineEquations.GetY((tmpStartX, p.Bias, p.Weights[0], p.Weights[1]))), (tmpEndX, p.LineEquations.GetY((tmpEndX, p.Bias, p.Weights[0], p.Weights[1]))));
         }
 
@@ -68,12 +70,13 @@ namespace Visualization
             {
                 foreach (TrainingSet point in trainData)
                 {
-                    DrawPoint((point.Input[0], point.Input[1], OutputConvertor((int)p.Guess(point.Input))));
+                    DrawPoint((point.Input[0].Map(dataLoader.Range,(-200,200)), point.Input[1].Map(dataLoader.Range, (-200, 200)), OutputConvertor((int)point.Output)));
                 }
             }
-            var tmpStartX = p.LineEquations.GetX((-250, p.Bias, p.Weights[0], p.Weights[1]));
-            var tmpEndX = p.LineEquations.GetX((250, p.Bias, p.Weights[0], p.Weights[1]));
-            DrawLine((tmpStartX, p.LineEquations.GetY((tmpStartX, p.Bias, p.Weights[0], p.Weights[1]))), (tmpEndX, p.LineEquations.GetY((tmpEndX, p.Bias, p.Weights[0], p.Weights[1]))));
+            var tmpStartX = p.LineEquations.GetX((-200, p.Bias, p.Weights[0], p.Weights[1]));
+            var tmpEndX = p.LineEquations.GetX((200, p.Bias, p.Weights[0], p.Weights[1]));
+            DrawLine((tmpStartX, p.LineEquations.GetY((tmpStartX, p.Bias, p.Weights[0], p.Weights[1]))),
+                (tmpEndX, p.LineEquations.GetY((tmpEndX, p.Bias, p.Weights[0], p.Weights[1]))));
 
             p.TrainStep();
         }
