@@ -56,7 +56,7 @@
         </Border>
         <Label x:Name="EpochLabel" Content="Label" HorizontalAlignment="Left" Margin="50,-2,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.04,0.329"/>
         <Button x:Name="TestButton" Content="Test" HorizontalAlignment="Left" Margin="525,6,0,0" VerticalAlignment="Top" Click="TestButton_Click" RenderTransformOrigin="2.494,0.226"/>
-        <Button x:Name="TrainButton" Content="New Train Data" HorizontalAlignment="Left" Margin="466,31,0,0" VerticalAlignment="Top" Click="TrainButton_Click"/>
+        <Button x:Name="TrainButton" Content="Next Data" HorizontalAlignment="Left" Margin="493,31,0,0" VerticalAlignment="Top" Click="TrainButton_Click"/>
         <Label Content="Weight 1 :" HorizontalAlignment="Left" Margin="50,16,0,0" VerticalAlignment="Top"></Label>
         <Label Content="Weight 2 :" HorizontalAlignment="Left" Margin="50,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.987,0.637"></Label>
         <Label Content="Bias         :" HorizontalAlignment="Left" Margin="50,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.2,0.502"></Label>
@@ -65,9 +65,14 @@
         <Label x:Name="W1" Content="W1" HorizontalAlignment="Left" Margin="110,16,0,0" VerticalAlignment="Top"></Label>
         <Label x:Name="W2" Content="W2" HorizontalAlignment="Left" Margin="110,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.987,0.637"></Label>
         <Label x:Name="b" Content="W3" HorizontalAlignment="Left" Margin="110,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.193,0.233"></Label>
+
         <!--<Label x:Name="Error" Content="W4" HorizontalAlignment="Left" Margin="110,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.193,0.233"></Label>-->
 
         <Label x:Name="lineLabel" Content="Label" HorizontalAlignment="Left" Margin="243,-2,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="Train100Button" Content="Train 100x" HorizontalAlignment="Left" Margin="493,56,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.219,0.019" Click="Train100Button_Click"/>
+        <Button x:Name="Train100Button" Content="Train 100x" HorizontalAlignment="Left" Margin="492,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.219,0.019" Click="Train100Button_Click"/>
+        <Label Content="Input file:" HorizontalAlignment="Left" Margin="243,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.2,0.502"/>
+        <Label x:Name="fileLabel1" Content="file" HorizontalAlignment="Left" Margin="308,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.193,0.233"/>
+        <Button x:Name="btnTrainFull" Content="Train" HorizontalAlignment="Left" Margin="482,6,0,0" VerticalAlignment="Top" Click="btnTrainFull_Click"/>
+        <Button x:Name="TrainBig" Content="Train 100000x" HorizontalAlignment="Left" Margin="473,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.219,0.019" Click="TrainBig_Click" />
     </Grid>
 </Window>

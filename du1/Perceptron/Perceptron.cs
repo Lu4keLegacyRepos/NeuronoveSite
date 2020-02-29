@@ -61,18 +61,42 @@ namespace Perceptron
 
         public void Train(int numOfEpoch, List<IDataSet> trainData)
         {
-            for (int i = 0; i < numOfEpoch; i++)
+            if (numOfEpoch < 0)
             {
-                foreach (TrainingSet data in trainData)
+                double err = -55;
+                while (err != Error)
                 {
-                    var output = Guess(data.Input);
-                    var error = data.Output - output;
-                    UpdateWeight((0, data.Input[0], error));
-                    UpdateWeight((1, data.Input[1], error));
-                    UpdateBias(error);
-                    Error = error;
+                    err = Error;
+                    foreach (TrainingSet data in trainData)
+                    {
+                        var output = Guess(data.Input);
+                        var error = data.Output - output;
+                        UpdateWeight((0, data.Input[0], error));
+                        UpdateWeight((1, data.Input[1], error));
+                        UpdateBias(error);
+                        Error += error;
+                    }
+                    trainData.Shuffle();
+                    numOfEpoch++;
+                    if (numOfEpoch > 100000) break;
                 }
-                trainData.Shuffle();
+            }
+            else
+            {
+
+                for (int i = 0; i < numOfEpoch; i++)
+                {
+                    foreach (TrainingSet data in trainData)
+                    {
+                        var output = Guess(data.Input);
+                        var error = data.Output - output;
+                        UpdateWeight((0, data.Input[0], error));
+                        UpdateWeight((1, data.Input[1], error));
+                        UpdateBias(error);
+                        Error = error;
+                    }
+                    trainData.Shuffle();
+                }
             }
         }
 
